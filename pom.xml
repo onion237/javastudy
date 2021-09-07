@@ -28,7 +28,6 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>practicing01</module>
 		<module>practice01</module>
 		<module>practice02</module>
 	</modules>
