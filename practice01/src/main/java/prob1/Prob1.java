@@ -12,7 +12,7 @@ public class Prob1 {
 		
 		System.out.print("수를 입력하시오 : ");
 		num = scanner.nextInt();
-		
+	
 		if(num % 3 == 0) 
 			result = "3의 배수입니다.";
 		else
