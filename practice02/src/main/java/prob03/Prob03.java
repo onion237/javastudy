@@ -9,12 +9,16 @@ public class Prob03 {
 
 		// 공백 문자 바꾸기
 		replaceSpace(c);
-
 		// 수정된 배열 원소 출력
 		printCharArray(c);
 	}
 	public static void printCharArray(char[] c) {
-		System.out.println(c);
+		System.out.println("==================");
+		String str = "22222";
+		System.out.println(str);
+		System.out.println(c.toString());
+//		System.out.println(c);
+		System.out.println("==================");
 	}
 	public static void replaceSpace(char[] c) {
 		for(int i = 0; i < c.length; i++) {
