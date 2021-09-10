@@ -12,10 +12,14 @@ public class Student extends Person{
 	{
 		System.out.println("Student instance block");
 	}
+	
+	
+	
 	public Student() {
-		super();
+		super("asdasdas");
 		System.out.println("Student() called");
 	}
+	
 	
 	public Student(Builder builder) {
 		super(builder);

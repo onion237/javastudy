@@ -7,8 +7,7 @@ public class Person {
 	}
 	public Person() {
 		System.out.println("Person() called");
-	}
-	
+	}	
 	public Person(String name) {
 		this.name = name;
 	}

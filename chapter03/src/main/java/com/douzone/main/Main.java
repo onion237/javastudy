@@ -19,10 +19,26 @@ public class Main {
 		draw(point1);
 		point1.show(false);
 		
-		Point point2 = new ColorPoint(100, 200, "red");
-//		((ColorPoint)point2).setColor("red"); //runtime exception 발생 가능성
-//		point2.setX(100);
-//		point2.setY(100);
+		
+		String input = "color"; //"black"
+		
+		
+		
+		Point point2;
+		if(input.equals("color")) {
+			point2 = new ColorPoint(100, 200, "red");			
+		}else {
+			point2 = new Point(100,100);
+		}
+		
+		
+		((ColorPoint)point2).setColor("red"); //runtime exception 발생 가능성
+		
+		point2.draw();
+		
+		point2.setX(100);
+		point2.setY(100);
+		
 		draw(point2);
 		point2.show(false);
 		point2.show(true);
