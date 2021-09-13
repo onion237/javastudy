@@ -28,7 +28,6 @@ public class CalendarTest {
 		int hour = cal.get(Calendar.HOUR);
 		int minute = cal.get(Calendar.MINUTE);
 		int second = cal.get(Calendar.SECOND);
-		
 //		DayOfWeek dayOfWeek = DayOfWeek.of(day - 1);
 //		Month m = Month.of(month);
 //		System.out.println(day);
