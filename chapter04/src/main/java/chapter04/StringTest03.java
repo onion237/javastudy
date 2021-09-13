@@ -1,5 +1,7 @@
 package chapter04;
 
+import java.util.Arrays;
+
 public class StringTest03 {
 	public static void main(String[] args) {
 //		String s1 = "Hello " + "World " + "Java " + 1.8;
@@ -22,5 +24,24 @@ public class StringTest03 {
 			sb.append(i);
 		}
 		System.out.println(sb.length());
+		
+		//String method들
+		String s4 = "aBcABCabcAbc";
+		System.out.println(s4.length());
+		System.out.println(s4.charAt(0));
+		System.out.println(s4.indexOf("abc", 7));
+		System.out.println(s4.substring(3,5));
+
+		String s5 = "    ab    cd    ";
+		String s6 = "efg,hi,jkl,mno,pqr";
+		
+		String s7 = s2.concat(s4);
+		
+		System.out.println(s7);
+		System.out.println(s5.trim());
+		Arrays.stream(s6.split(",")).forEach(System.out::println);
+		System.out.println("-------------------------------");
+		Arrays.stream(s6.split(" ")).forEach(System.out::println);
+		System.out.println("-------------------------------");
 	}
 }
