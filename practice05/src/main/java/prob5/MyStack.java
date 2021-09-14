@@ -1,26 +1,26 @@
 package prob5;
 
-public class MyStack {
+public class MyStack<E> {
 	private final int DEFAULT_SIZE = 8;
 	private int top = -1;
-	private String[] arr;
+	private E[] arr;
 	
 	public MyStack() {
 		super();
-		arr = new String[DEFAULT_SIZE];
+		arr = (E[])new Object[DEFAULT_SIZE];
 	}
 	
 	public MyStack(int i) {
-		arr = new String[i];
+		arr = (E[])new Object[i];
 	}
 	
-	public void push(String item) {
+	public void push(E item) {
 		if(isFull()) transfer();
 		arr[++top] = item;
 	}
 	
 	public void transfer() {
-		String[] nArr = new String[arr.length * 2];
+		E[] nArr = (E[])new Object[arr.length * 2];
 		for(int i = 0; i < arr.length; i++) {
 			nArr[i] = arr[i];
 		}
@@ -36,12 +36,12 @@ public class MyStack {
 		return top < 0;
 	}
 
-	public String pop() throws MyStackException {
+	public E pop() throws MyStackException {
 		if(isEmpty()) {
 			throw new MyStackException("stack is empty");
 		}
 		
-		String item = arr[top--];
+		E item = arr[top--];
 		return item;
 	}
 }
