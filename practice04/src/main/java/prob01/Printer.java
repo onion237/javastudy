@@ -1,5 +1,7 @@
 package prob01;
 
+import java.util.Arrays;
+
 public class Printer {
 
 //	public void println(String string) {
@@ -26,5 +28,16 @@ public class Printer {
 
 	public <T> void println(T t) {
 		System.out.println(t);
+	}
+	
+	public <T> void println(T... t) {
+		System.out.println(Arrays.toString(t));
+	}
+
+	public int sum(int... nums) {
+		// TODO Auto-generated method stub
+		int sum = 0;
+		for(int num : nums) sum += num;
+		return sum;
 	}
 }
