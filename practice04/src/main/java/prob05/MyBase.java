@@ -6,7 +6,7 @@ public class MyBase extends Base {
 	public void service(String state) {
 		if("낮".equals(state)) day();
 		else if("오후".equals(state)) afternoon();
-		else night();
+		else super.service(state);
 	}
 
 	@Override
