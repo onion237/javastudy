@@ -30,7 +30,7 @@ public class ChatServerThread extends Thread {
 		try {
 			request = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 			Response response = null;
-
+			String msg = null;
 			while (true) {
 				String data = request.readLine();
 				System.out.println(data);
@@ -45,8 +45,16 @@ public class ChatServerThread extends Thread {
 				switch (tokens[0]) {
 				case "join":
 					// user객체 생성
-					ChatServer.log(new String(decoder.decode(tokens[1]), "utf-8"));
-					user = new User(new String(decoder.decode(tokens[1]), "utf-8"), socket);
+					if(tokens.length < 2) {
+						response = new Response("fail");
+						response.setDesc("유효하지 않은 닉네임입니다. 다른 닉네임을 입력해주세요.");
+						responseToUser(response);
+						break;
+					}
+					
+					msg = new String(decoder.decode(tokens[1]), "utf-8");
+					ChatServer.log(msg);
+					user = new User(msg, socket);
 
 					// 이미 방에 존재하는 유저인지 검사(닉네임 기준)
 					if (broker.isExist(user)) {
@@ -67,8 +75,13 @@ public class ChatServerThread extends Thread {
 						responseToUser(response);
 						break;
 					}
+					if(tokens.length < 2) {
+						msg = "";
+					}else {
+						msg = tokens[1];
+					}
 
-					sendMessage(tokens[1]);
+					sendMessage(msg);
 					break;
 				case "quit":
 					quit();
