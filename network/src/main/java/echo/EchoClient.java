@@ -2,14 +2,13 @@ package echo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Scanner;
 
 public class EchoClient {
 	private static final String SERVER_IP = "115.22.10.141";
@@ -27,18 +26,18 @@ public class EchoClient {
 			
 			BufferedReader response = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 			PrintWriter request = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true);
-			BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in)); //charset 인자를 주지않으면, 자동으로 시스템의 charset으로 세팅함
 			
+			BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in)); //charset 인자를 주지않으면, 자동으로 시스템의 charset으로 세팅함
 			while(true) {				
 				// 쓰기
 				System.out.print(">> [send to server] ");
+				// 키보드 입력
 				String input = inputReader.readLine();
 		
 				if(input == null || "exit".equals(input))
 					break;
 				
 				request.println(input);
-
 				
 				// 읽기
 				String responseString = response.readLine();

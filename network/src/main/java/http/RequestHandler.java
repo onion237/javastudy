@@ -78,17 +78,18 @@ public class RequestHandler extends Thread {
 	}
 
 	private void responseStaticResource(OutputStream outputStream, String url, String protocol) throws IOException {
-
 		// welcome file
 		if ("/".equals(url))
-			url = "/index.html";
+			url = DOCUMENT_ROOT + "/index.html";
 
-		File resource = new File(DOCUMENT_ROOT + url);
+		File resource = new File(url);
 
 		if (!resource.exists()) {
 			response404Error(outputStream, url, protocol);
 			return;
 		}
+		
+		// GET / HTTP/1.1
 		
 		String status = "200 OK";
 		response(outputStream, url, protocol, status, resource);
@@ -96,7 +97,13 @@ public class RequestHandler extends Thread {
 
 	private void response(OutputStream outputStream, String url, String protocol, String status, File resource) throws IOException {
 		byte[] body = Files.readAllBytes(resource.toPath());
+		
 		String contentType = Files.probeContentType(resource.toPath());
+		
+		// HTTP/1.1 400 Bad Request
+		// ContentType: asdfasdfasdfasdfsadf
+		// 
+	
 		outputStream.write((protocol + " " + status +"\n").getBytes("UTF-8"));
 		outputStream.write(("Content-Type:" + contentType + "; charset=utf-8\n").getBytes("UTF-8"));
 		outputStream.write("\n".getBytes());

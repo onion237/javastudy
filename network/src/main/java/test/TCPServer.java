@@ -15,15 +15,21 @@ public class TCPServer {
 			// 1. 서버소켓 생성
 			serverSocket = new ServerSocket();
 			
+			//TIME_WAIT상태에서도 소켓 포트 번호 할당이 가능하도록 하기 위해서..
+			serverSocket.setReuseAddress(true);
+			
 			// 2. binding
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", 9999));
-			
+			Socket socket = null;
 			// 3. accept
-			Socket socket = serverSocket.accept();
-			
-			InetSocketAddress remoteAddr = (InetSocketAddress) socket.getRemoteSocketAddress();
-			
-			System.out.println("[server] connected by client[" + remoteAddr.getAddress().getHostAddress() + ":" + remoteAddr.getPort());
+			while("1".equals("1")) {
+				socket = serverSocket.accept();
+				
+				InetSocketAddress remoteAddr = (InetSocketAddress) socket.getRemoteSocketAddress();
+				
+				System.out.println("[server] connected by client[" + remoteAddr.getAddress().getHostAddress() + ":" + remoteAddr.getPort());
+				
+			}
 			
 			try {
 				// 4. I/O Stream 받아오기
