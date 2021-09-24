@@ -17,7 +17,7 @@ public class ChatServer {
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", port));
 			MessageBroker broker = new MessageBroker();
 			while(true) {
-				Socket socket = serverSocket.accept();			
+				Socket socket = serverSocket.accept();//blocking method			
 				new ChatServerThread(socket, broker).start();
 			}
 		} catch (IOException e) {

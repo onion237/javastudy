@@ -31,7 +31,7 @@ public class ChatServerThread extends Thread {
 			request = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 			Response response = null;
 			String msg = null;
-			while (true) {
+			loop: while (true) {
 				String data = request.readLine();
 				System.out.println(data);
 				System.out.println("==================================");
@@ -45,13 +45,13 @@ public class ChatServerThread extends Thread {
 				switch (tokens[0]) {
 				case "join":
 					// user객체 생성
-					if(tokens.length < 2) {
+					if (tokens.length < 2) {
 						response = new Response("fail");
 						response.setDesc("유효하지 않은 닉네임입니다. 다른 닉네임을 입력해주세요.");
 						responseToUser(response);
 						break;
 					}
-					
+
 					msg = new String(decoder.decode(tokens[1]), "utf-8");
 					ChatServer.log(msg);
 					user = new User(msg, socket);
@@ -75,9 +75,9 @@ public class ChatServerThread extends Thread {
 						responseToUser(response);
 						break;
 					}
-					if(tokens.length < 2) {
+					if (tokens.length < 2) {
 						msg = "";
-					}else {
+					} else {
 						msg = tokens[1];
 					}
 
@@ -85,18 +85,16 @@ public class ChatServerThread extends Thread {
 					break;
 				case "quit":
 					quit();
-					return;
+					break loop;
 				default:
 					ChatServer.log("알 수 없는 입력");
 					responseToUser(new Response("fail", "알 수 없는 입력입니다."));
 				}
 			}
-
 		} catch (IOException e) {
-			e.printStackTrace();
+			ChatServer.log(e + "");
 		} catch (IllegalTypeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ChatServer.log(e + "");
 		} finally {
 			try {
 				quit();
@@ -109,6 +107,9 @@ public class ChatServerThread extends Thread {
 					request.close();
 				if (user.getWriter() != null)
 					user.getWriter().close();
+				if (user.getSocket() != null && !user.getSocket().isClosed())
+					user.getSocket().close();
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -155,7 +156,7 @@ public class ChatServerThread extends Thread {
 		Message message = new Message("msg");
 		message.setContentEncoded(msg);
 		String decoded = null;
-		
+
 		try {
 			decoded = new String(decoder.decode(msg), "utf-8");
 		} catch (UnsupportedEncodingException e) {
@@ -163,22 +164,22 @@ public class ChatServerThread extends Thread {
 			e.printStackTrace();
 		}
 		message.setSender(this.user.getUserName());
-		
-		if(decoded != null && !decoded.isEmpty() && decoded.charAt(0) == ':') {
+
+		if (decoded != null && !decoded.isEmpty() && decoded.charAt(0) == ':') {
 			User user = new User(decoded.substring(decoded.indexOf(':') + 1, decoded.indexOf(' ')));
-			if(broker.isExist(user)) {
+			if (broker.isExist(user)) {
 				System.out.println(this.user.getUserName() + "이 " + user.getUserName() + "에게 귓속말");
-				
+
 				message.setReceiver(user.getUserName());
 				message.setContent(decoded.substring(decoded.indexOf(' ') + 1));
 				synchronized (broker) {
 					broker.sendTo(user, message);
 				}
-				
+
 				return;
 			}
 		}
-		
+
 		synchronized (broker) {
 			broker.broadCast(message);
 		}

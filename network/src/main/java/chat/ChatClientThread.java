@@ -47,7 +47,11 @@ public class ChatClientThread extends Thread {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(socket.isClosed()) {
+				System.out.println("연결이 종료되었습니다.");
+			}else {
+				e.printStackTrace();				
+			}
 		}
 
 	}
